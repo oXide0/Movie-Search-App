@@ -1,0 +1,20 @@
+{
+	"logoName": "Movie Search",
+	"drawerLogoName": "Your movie list",
+	"searchBar": {
+		"placeholder": "Search Movies",
+		"select": {
+			"title": "Sort by",
+			"popularity": "Popularity",
+			"upcoming": "Upcoming",
+			"rating": "Rating"
+		}
+	},
+	"modal": {
+		"releaseDate": "Release date: "
+	},
+	"snackbar": {
+		"added": "Added to your list",
+		"removed": "Removed from your list"
+	}
+}
