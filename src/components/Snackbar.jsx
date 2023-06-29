@@ -20,7 +20,7 @@ function CustomizedSnackbar({ active, setActive, type }) {
 	return (
 		<Snackbar open={active} autoHideDuration={2000} onClose={handleClose}>
 			<Alert onClose={handleClose} severity={type} sx={{ width: '100%' }}>
-				{type === 'success' ? t('snackbar.added') : 'You already added this movie'}
+				{type === 'success' ? t('snackbar.added') : t('snackbar.alreadyAdded')}
 			</Alert>
 		</Snackbar>
 	);

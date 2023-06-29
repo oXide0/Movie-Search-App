@@ -15,6 +15,6 @@
 	},
 	"snackbar": {
 		"added": "Added to your list",
-		"removed": "Removed from your list"
+		"alreadyAdded": "You already have this movie in your list"
 	}
 }
