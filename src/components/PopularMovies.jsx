@@ -24,9 +24,9 @@ function PopularMovies() {
 	) : (
 		<>
 			<div className='movies'>
-				{data.results.map((m) => {
-					return <MovieCard key={m.id} data={m} />;
-				})}
+				{data.results.map((m) => (
+					<MovieCard key={m.id} data={m} />
+				))}
 			</div>
 			<div style={{ padding: '30px 0' }}>
 				<Pagination

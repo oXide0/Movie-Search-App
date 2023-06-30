@@ -30,7 +30,6 @@ function MovieCard({ data, type }) {
 		e.stopPropagation();
 		if (type === 'favorite') {
 			dispatch(removeMovie(data.id));
-			setSnackbarActive(true);
 			return;
 		}
 		const movie = moviesData.find((m) => m.id === data.id);
@@ -40,6 +39,7 @@ function MovieCard({ data, type }) {
 			return;
 		}
 		dispatch(addMovie(data));
+		setSnackbarType('success');
 		setSnackbarActive(true);
 	};
 
@@ -55,7 +55,6 @@ function MovieCard({ data, type }) {
 				/>
 				<IconButton sx={buttonStyles} onClick={(e) => onClickHandler(e)}>
 					{type === 'favorite' ? <DeleteIcon color='primary' /> : <AddCircleIcon color='primary' />}
-					{/* {isFavorite ? <FavoriteIcon color='primary' /> : <FavoriteBorderIcon color='primary' />} */}
 				</IconButton>
 				<CardActionArea>
 					<CardMedia

@@ -2,8 +2,11 @@ import PopularMovies from './PopularMovies';
 import TopRatingMovies from './TopRatedMovies';
 import UpcomingMovies from './UpcomingMovies';
 import FoundMovies from './FoundMovies';
+import { useSelector } from 'react-redux';
 
-function MovieList({ sorting, query }) {
+function MovieList({ query }) {
+	const sorting = useSelector((state) => state.sorting.value);
+
 	if (query) {
 		return (
 			<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

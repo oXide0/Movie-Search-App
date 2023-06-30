@@ -9,31 +9,11 @@ import { useEffect, useState } from 'react';
 import { toggleDrawer } from '../features/drawer/drawerSlice';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
-import Slide from '@mui/material/Slide';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { useSelector } from 'react-redux';
 import { toggleMode } from '../features/mode/modeSlice';
-
-function HideOnScroll(props) {
-	const { children, window } = props;
-	const trigger = useScrollTrigger({
-		target: window ? window() : undefined,
-	});
-
-	return (
-		<Slide appear={false} direction='down' in={!trigger}>
-			{children}
-		</Slide>
-	);
-}
-
-HideOnScroll.propTypes = {
-	children: PropTypes.element.isRequired,
-	window: PropTypes.func,
-};
+import HideOnScroll from '../utils/HideOnScroll';
 
 function Header(props) {
 	const mode = useSelector((state) => state.mode.value);
