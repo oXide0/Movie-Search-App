@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../store/store';
 
-const initialState = {
+export interface ModeState {
+	value: string;
+}
+
+const initialState: ModeState = {
 	value: 'dark',
 };
 
@@ -17,3 +22,4 @@ const modeSlice = createSlice({
 
 export const { toggleMode } = modeSlice.actions;
 export default modeSlice.reducer;
+export const selectMode = (state: RootState) => state.mode.value;

@@ -6,11 +6,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { setSorting } from '../features/sorting/sortingSlice';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
+import { setSorting, selectSorting } from '../features/sortingSlice';
 
 const boxStyle = {
 	background: '#6fa2f0',
@@ -24,13 +24,17 @@ const boxStyle = {
 	padding: '0 20px',
 };
 
-function SearchBlock({ setQuery }) {
+interface SearchBlockProps {
+	setQuery: (query: string) => void;
+}
+
+function SearchBlock({ setQuery }: SearchBlockProps) {
 	const [searchValue, setSearchValue] = useState('');
-	const sorting = useSelector((state) => state.sorting.value);
-	const dispatch = useDispatch();
+	const sorting = useAppSelector(selectSorting);
+	const dispatch = useAppDispatch();
 	const { t } = useTranslation();
 
-	const onSubmitHandler = (e) => {
+	const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (!searchValue.trim()) {
 			return;
@@ -43,6 +47,12 @@ function SearchBlock({ setQuery }) {
 			return;
 		}
 		setQuery(searchValue);
+	};
+
+	const sortHandler = (e: SelectChangeEvent) => {
+		setSearchValue('');
+		setQuery('');
+		dispatch(setSorting(e.target.value as string));
 	};
 
 	return (
@@ -68,7 +78,7 @@ function SearchBlock({ setQuery }) {
 					sx={{ color: '#1E1E1E !important' }}
 					label={t('searchBar.select.title')}
 					value={sorting}
-					onChange={(e) => dispatch(setSorting(e.target.value))}
+					onChange={sortHandler}
 				>
 					<MenuItem value='Popularity'>{t('searchBar.select.popularity')}</MenuItem>
 					<MenuItem value='Rating'>{t('searchBar.select.rating')}</MenuItem>

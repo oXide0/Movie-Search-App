@@ -1,14 +1,29 @@
 import { movies } from './movies';
+import { IMovie } from '../types/types';
+
+interface MoviesLanguage {
+	language: string;
+	id: number;
+}
+
+type Movies = {
+	page: number;
+	language: string;
+};
+
+type GetMovies = {
+	results: IMovie[];
+};
 
 export const moviesApi = movies.injectEndpoints({
 	endpoints: (builder) => ({
-		getMoviesByPage: builder.query({
+		getMoviesByPage: builder.query<GetMovies, Movies>({
 			query: ({ page, language }) => `movie/popular?language=${language}&page=${page}`,
 		}),
-		getMoviesByRating: builder.query({
+		getMoviesByRating: builder.query<GetMovies, Movies>({
 			query: ({ page, language }) => `movie/top_rated?language=${language}&page=${page}`,
 		}),
-		getUpcomingMovies: builder.query({
+		getUpcomingMovies: builder.query<GetMovies, Movies>({
 			query: ({ page, language }) => `movie/upcoming?language=${language}&page=${page}`,
 		}),
 		getMoviesByQuery: builder.query({
@@ -20,7 +35,7 @@ export const moviesApi = movies.injectEndpoints({
 				)}&include_adult=false&language=${language}&page=${page}`;
 			},
 		}),
-		getMovieDetailsById: builder.query({
+		getMovieDetailsById: builder.query<IMovie, MoviesLanguage>({
 			query: (args) => {
 				const { id, language } = args;
 				return `movie/${id}?language=${language}`;

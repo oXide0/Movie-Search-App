@@ -4,25 +4,23 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import MovieCard from './MovieCard';
-import { useSelector, useDispatch } from 'react-redux';
-import { toggleDrawer } from '../features/drawer/drawerSlice';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
+import { toggleDrawer, selectIsDrawerOpen } from '../features/drawerSlice';
+import { selectfavoriteMovies } from '../features/favoriteMoviesSlice';
 import { useTranslation } from 'react-i18next';
-import CustomizedSnackbar from './Snackbar';
 
 function TemporaryDrawer() {
-	const drawerMode = useSelector((state) => state.drawer.isOpen);
-	const moviesData = useSelector((state) => state.favoriteMovies.movies);
-	const dispatch = useDispatch();
+	const drawerMode = useAppSelector(selectIsDrawerOpen);
+	const moviesData = useAppSelector(selectfavoriteMovies);
+	const dispatch = useAppDispatch();
 	const { t } = useTranslation();
 
 	const onCloseDrawer = () => {
 		dispatch(toggleDrawer());
-		// window.location.reload(true);
 	};
 
 	return (
 		<Drawer anchor='left' open={drawerMode} onClose={() => dispatch(toggleDrawer())}>
-			<CustomizedSnackbar />
 			<Box
 				sx={{ width: 600, height: '1000%', background: '#303030', padding: '10px 5px 0 10px' }}
 				role='presentation'
@@ -37,7 +35,7 @@ function TemporaryDrawer() {
 				</header>
 				<main style={{ display: 'flex', gap: '30px', padding: '30px 20px', flexWrap: 'wrap' }}>
 					{moviesData.map((m) => (
-						<MovieCard key={m.id} data={m} favorite={true} type='favorite' />
+						<MovieCard key={m.id} data={m} type='favorite' />
 					))}
 				</main>
 			</Box>

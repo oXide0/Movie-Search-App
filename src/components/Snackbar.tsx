@@ -1,16 +1,23 @@
 import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
 import { forwardRef } from 'react';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { useTranslation } from 'react-i18next';
+import { TypeSeverity } from '../types/types';
 
-const Alert = forwardRef(function Alert(props, ref) {
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
 });
 
-function CustomizedSnackbar({ active, setActive, type }) {
+interface CustomizedSnackbarProps {
+	active: boolean;
+	setActive: (value: boolean) => void;
+	type: TypeSeverity;
+}
+
+function CustomizedSnackbar({ active, setActive, type }: CustomizedSnackbarProps) {
 	const { t } = useTranslation();
 
-	const handleClose = (event, reason) => {
+	const handleClose = (_: React.SyntheticEvent | Event, reason?: string) => {
 		if (reason === 'clickaway') {
 			return;
 		}
