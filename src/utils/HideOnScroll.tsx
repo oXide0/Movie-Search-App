@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Slide from '@mui/material/Slide';
+import { IHeader } from '../types/types';
 
-function HideOnScroll(props) {
+function HideOnScroll(props: IHeader) {
 	const { children, window } = props;
 	const trigger = useScrollTrigger({
 		target: window ? window() : undefined,

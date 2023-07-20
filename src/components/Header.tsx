@@ -5,41 +5,39 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { useEffect, useState } from 'react';
-import { toggleDrawer } from '../features/drawer/drawerSlice';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { toggleDrawer } from '../features/drawerSlice';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import { useTranslation } from 'react-i18next';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import { useSelector } from 'react-redux';
-import { toggleMode } from '../features/mode/modeSlice';
+import { toggleMode, selectMode } from '../features/modeSlice';
 import HideOnScroll from '../utils/HideOnScroll';
 
-function Header(props) {
-	const mode = useSelector((state) => state.mode.value);
+function Header() {
+	const mode = useAppSelector(selectMode);
 	const { t, i18n } = useTranslation();
 	const [language, setLanguage] = useState('en');
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		const language = localStorage.getItem('i18nextLng');
-		setLanguage(language);
+		const mainLanguage = localStorage.getItem('i18nextLng');
+		setLanguage(mainLanguage as string);
 	}, []);
 
-	const changeLanguage = (event, newLanguage) => {
+	const changeLanguage = (_: React.MouseEvent<HTMLElement>, newLanguage: string) => {
 		setLanguage(newLanguage);
 		i18n.changeLanguage(newLanguage);
 	};
 
 	return (
-		<HideOnScroll {...props}>
+		<HideOnScroll>
 			<AppBar>
 				<Toolbar>
 					<IconButton
 						size='large'
 						edge='start'
 						color='inherit'
-						aria-label='menu'
 						sx={{ mr: 2 }}
 						onClick={() => dispatch(toggleDrawer())}
 					>
@@ -53,7 +51,6 @@ function Header(props) {
 						value={language}
 						onChange={changeLanguage}
 						exclusive
-						aria-label='Platform'
 					>
 						<ToggleButton value='en' sx={{ color: '#fff' }}>
 							<img src='img/usa_icon.png' alt='' style={{ maxWidth: '35px' }} />

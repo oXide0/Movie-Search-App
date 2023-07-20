@@ -1,11 +1,16 @@
 import PopularMovies from './PopularMovies';
-import TopRatingMovies from './TopRatedMovies';
+import TopRatedMovies from './TopRatedMovies';
 import UpcomingMovies from './UpcomingMovies';
 import FoundMovies from './FoundMovies';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../hooks/redux-hooks';
+import { selectSorting } from '../features/sortingSlice';
 
-function MovieList({ query }) {
-	const sorting = useSelector((state) => state.sorting.value);
+interface MovieListProps {
+	query: string;
+}
+
+function MovieList({ query }: MovieListProps) {
+	const sorting = useAppSelector(selectSorting);
 
 	if (query) {
 		return (
@@ -25,7 +30,7 @@ function MovieList({ query }) {
 	if (sorting === 'Rating') {
 		return (
 			<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-				<TopRatingMovies />
+				<TopRatedMovies />
 			</div>
 		);
 	}

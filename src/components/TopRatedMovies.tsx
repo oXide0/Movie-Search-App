@@ -1,4 +1,4 @@
-import { useGetMoviesByPageQuery } from '../services/moviesApi';
+import { useGetMoviesByRatingQuery } from '../services/moviesApi';
 import CircularProgress from '@mui/material/CircularProgress';
 import MovieCard from './MovieCard';
 import ErrorText from './ErrorText';
@@ -6,16 +6,16 @@ import Pagination from '@mui/material/Pagination';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-function PopularMovies() {
+function TopRatedMovies() {
 	const [page, setPage] = useState(1);
 	const { i18n } = useTranslation();
-	const { data, error, isLoading } = useGetMoviesByPageQuery({ page, language: i18n.language });
+	const { data, error, isSuccess } = useGetMoviesByRatingQuery({ page, language: i18n.language });
 
 	const handleClickScroll = () => {
 		window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 	};
 
-	if (isLoading) {
+	if (!isSuccess) {
 		return <CircularProgress />;
 	}
 
@@ -34,7 +34,7 @@ function PopularMovies() {
 					count={500}
 					color='primary'
 					page={page}
-					onChange={(e, value) => {
+					onChange={(_, value) => {
 						handleClickScroll();
 						setPage(value);
 					}}
@@ -44,4 +44,4 @@ function PopularMovies() {
 	);
 }
 
-export default PopularMovies;
+export default TopRatedMovies;

@@ -3,13 +3,14 @@ import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
-import { addMovie, removeMovie } from '../features/favoriteMovies/favoriteMoviesSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { addMovie, removeMovie, selectfavoriteMovies } from '../features/favoriteMoviesSlice';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import { useState } from 'react';
 import BasicModal from './BasicModal';
 import CustomizedSnackbar from './Snackbar';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { IMovie, TypeSeverity } from '../types/types';
 
 const buttonStyles = {
 	position: 'absolute',
@@ -19,14 +20,19 @@ const buttonStyles = {
 	margin: '5px',
 };
 
-function MovieCard({ data, type }) {
+interface MovieCardProps {
+	data: IMovie;
+	type?: string;
+}
+
+function MovieCard({ data, type }: MovieCardProps) {
 	const [modalActive, setModalActive] = useState(false);
 	const [snackbarActive, setSnackbarActive] = useState(false);
-	const [snackbarType, setSnackbarType] = useState('success');
-	const moviesData = useSelector((state) => state.favoriteMovies.movies);
-	const dispatch = useDispatch();
+	const [snackbarType, setSnackbarType] = useState<TypeSeverity>('success');
+	const moviesData = useAppSelector(selectfavoriteMovies);
+	const dispatch = useAppDispatch();
 
-	const onClickHandler = (e) => {
+	const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		if (type === 'favorite') {
 			dispatch(removeMovie(data.id));
@@ -49,7 +55,7 @@ function MovieCard({ data, type }) {
 			<CustomizedSnackbar active={snackbarActive} setActive={setSnackbarActive} type={snackbarType} />
 			<Card className='card' onClick={() => setModalActive(true)}>
 				<Chip
-					label={data.vote_average.toFixed(1)}
+					label={!data.vote_average ? 'NR' : data.vote_average.toFixed(1)}
 					sx={{ position: 'absolute', zIndex: '10', margin: '8px 5px' }}
 					color='primary'
 				/>

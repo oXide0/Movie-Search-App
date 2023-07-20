@@ -7,6 +7,7 @@ import Rating from '@mui/material/Rating';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useGetMovieDetailsByIdQuery } from '../services/moviesApi';
 import { useTranslation } from 'react-i18next';
+import ErrorText from './ErrorText';
 
 const style = {
 	position: 'absolute',
@@ -22,15 +23,19 @@ const style = {
 	gap: '20px',
 };
 
-function BasicModal({ active, setActive, id }) {
+interface BasicModalProps {
+	active: boolean;
+	setActive: (active: boolean) => void;
+	id: number;
+}
+
+function BasicModal({ active, setActive, id }: BasicModalProps) {
 	const handleClose = () => setActive(false);
 	const { t, i18n } = useTranslation();
-	const { data, error, isLoading } = useGetMovieDetailsByIdQuery({ id, language: i18n.language });
+	const { data, error, isSuccess } = useGetMovieDetailsByIdQuery({ id, language: i18n.language });
 
 	return (
 		<Modal
-			aria-labelledby='transition-modal-title'
-			aria-describedby='transition-modal-description'
 			open={active}
 			onClose={handleClose}
 			closeAfterTransition
@@ -43,8 +48,8 @@ function BasicModal({ active, setActive, id }) {
 		>
 			<Fade in={active}>
 				<Box sx={style}>
-					{error && <Typography variant='h3'>Error: {error}</Typography>}
-					{isLoading ? (
+					{error && <ErrorText />}
+					{!isSuccess ? (
 						<CircularProgress />
 					) : (
 						<>

@@ -1,21 +1,21 @@
-import { useGetMoviesByQueryQuery } from '../services/moviesApi';
+import { useGetUpcomingMoviesQuery } from '../services/moviesApi';
+import ErrorText from './ErrorText';
 import CircularProgress from '@mui/material/CircularProgress';
 import MovieCard from './MovieCard';
-import ErrorText from './ErrorText';
 import Pagination from '@mui/material/Pagination';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-function FoundMovies({ query }) {
+function UpcomingMovies() {
 	const [page, setPage] = useState(1);
 	const { i18n } = useTranslation();
-	const { data, error, isLoading } = useGetMoviesByQueryQuery({ query, page, language: i18n.language });
+	const { data, error, isSuccess } = useGetUpcomingMoviesQuery({ page, language: i18n.language });
 
 	const handleClickScroll = () => {
 		window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 	};
 
-	if (isLoading) {
+	if (!isSuccess) {
 		return <CircularProgress />;
 	}
 
@@ -31,10 +31,10 @@ function FoundMovies({ query }) {
 			<div style={{ padding: '30px 0' }}>
 				<Pagination
 					sx={{ background: '#adbdd4', borderRadius: '5px', padding: '5px' }}
-					count={data.total_pages}
+					count={23}
 					color='primary'
 					page={page}
-					onChange={(e, value) => {
+					onChange={(_, value) => {
 						handleClickScroll();
 						setPage(value);
 					}}
@@ -44,4 +44,4 @@ function FoundMovies({ query }) {
 	);
 }
 
-export default FoundMovies;
+export default UpcomingMovies;
