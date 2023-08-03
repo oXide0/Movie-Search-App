@@ -5,28 +5,21 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import React, { useEffect, useState } from 'react';
 import { toggleDrawer } from '../features/drawerSlice';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import { useTranslation } from 'react-i18next';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { toggleMode, selectMode } from '../features/modeSlice';
-import HideOnScroll from '../utils/HideOnScroll';
+import HideOnScroll from './HideOnScroll';
+import { TypeLanguage } from '../types/types';
 
 function Header() {
 	const mode = useAppSelector(selectMode);
 	const { t, i18n } = useTranslation();
-	const [language, setLanguage] = useState('en');
 	const dispatch = useAppDispatch();
 
-	useEffect(() => {
-		const mainLanguage = localStorage.getItem('i18nextLng');
-		setLanguage(mainLanguage as string);
-	}, []);
-
-	const changeLanguage = (_: React.MouseEvent<HTMLElement>, newLanguage: string) => {
-		setLanguage(newLanguage);
+	const changeLanguage = (_: React.MouseEvent<HTMLElement>, newLanguage: TypeLanguage) => {
 		i18n.changeLanguage(newLanguage);
 	};
 
@@ -48,7 +41,7 @@ function Header() {
 					</Typography>
 					<ToggleButtonGroup
 						sx={{ color: '#fff', paddingRight: '20px' }}
-						value={language}
+						value={i18n.language}
 						onChange={changeLanguage}
 						exclusive
 					>

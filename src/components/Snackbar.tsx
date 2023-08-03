@@ -21,9 +21,9 @@ function CustomizedSnackbar({ active, setActive, type }: CustomizedSnackbarProps
 		if (reason === 'clickaway') {
 			return;
 		}
-
 		setActive(false);
 	};
+
 	return (
 		<Snackbar open={active} autoHideDuration={2000} onClose={handleClose}>
 			<Alert onClose={handleClose} severity={type} sx={{ width: '100%' }}>

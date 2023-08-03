@@ -11,18 +11,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import { setSorting, selectSorting } from '../features/sortingSlice';
-
-const boxStyle = {
-	background: '#6fa2f0',
-	width: '1330px',
-	height: '70px',
-	margin: '40px auto',
-	borderRadius: '5px',
-	display: 'flex',
-	justifyContent: 'space-between',
-	alignItems: 'center',
-	padding: '0 20px',
-};
+import { searchBlockStyles } from '../utils/styles';
 
 interface SearchBlockProps {
 	setQuery: (query: string) => void;
@@ -42,21 +31,14 @@ function SearchBlock({ setQuery }: SearchBlockProps) {
 		setQuery(searchValue);
 	};
 
-	const onClickHandler = () => {
-		if (!searchValue.trim()) {
-			return;
-		}
-		setQuery(searchValue);
-	};
-
 	const sortHandler = (e: SelectChangeEvent) => {
 		setSearchValue('');
 		setQuery('');
-		dispatch(setSorting(e.target.value as string));
+		dispatch(setSorting(e.target.value));
 	};
 
 	return (
-		<Box sx={boxStyle}>
+		<Box sx={searchBlockStyles}>
 			<Paper
 				component='form'
 				sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
@@ -68,7 +50,7 @@ function SearchBlock({ setQuery }: SearchBlockProps) {
 					value={searchValue}
 					onChange={(e) => setSearchValue(e.target.value)}
 				/>
-				<IconButton type='button' sx={{ p: '10px' }} onClick={onClickHandler}>
+				<IconButton type='submit' sx={{ p: '10px' }}>
 					<SearchIcon />
 				</IconButton>
 			</Paper>

@@ -13,3 +13,5 @@ export interface IMovie {
 	release_date: string;
 	genres: TypeGenre[];
 }
+
+export type TypeLanguage = 'en' | 'uk';
