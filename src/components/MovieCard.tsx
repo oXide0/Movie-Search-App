@@ -6,19 +6,12 @@ import IconButton from '@mui/material/IconButton';
 import { addMovie, removeMovie, selectfavoriteMovies } from '../features/favoriteMoviesSlice';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import { useState } from 'react';
-import BasicModal from './BasicModal';
+import BasicModal from './MovieModal';
 import CustomizedSnackbar from './Snackbar';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IMovie, TypeSeverity } from '../types/types';
-
-const buttonStyles = {
-	position: 'absolute',
-	right: '0',
-	zIndex: '10',
-	background: 'rgba(255, 255, 255, 0.6)',
-	margin: '5px',
-};
+import { movieCardButtonStyles } from '../utils/styles';
 
 interface MovieCardProps {
 	data: IMovie;
@@ -59,7 +52,7 @@ function MovieCard({ data, type }: MovieCardProps) {
 					sx={{ position: 'absolute', zIndex: '10', margin: '8px 5px' }}
 					color='primary'
 				/>
-				<IconButton sx={buttonStyles} onClick={(e) => onClickHandler(e)}>
+				<IconButton sx={movieCardButtonStyles} onClick={(e) => onClickHandler(e)}>
 					{type === 'favorite' ? <DeleteIcon color='primary' /> : <AddCircleIcon color='primary' />}
 				</IconButton>
 				<CardActionArea>

@@ -1,9 +1,12 @@
-import PropTypes from 'prop-types';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Slide from '@mui/material/Slide';
-import { IHeader } from '../types/types';
 
-function HideOnScroll(props: IHeader) {
+interface HideOnScrollProps {
+	window?: () => Window;
+	children: React.ReactElement;
+}
+
+function HideOnScroll(props: HideOnScrollProps) {
 	const { children, window } = props;
 	const trigger = useScrollTrigger({
 		target: window ? window() : undefined,
@@ -15,10 +18,5 @@ function HideOnScroll(props: IHeader) {
 		</Slide>
 	);
 }
-
-HideOnScroll.propTypes = {
-	children: PropTypes.element.isRequired,
-	window: PropTypes.func,
-};
 
 export default HideOnScroll;

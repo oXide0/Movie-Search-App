@@ -34,8 +34,8 @@ function TemporaryDrawer() {
 					</IconButton>
 				</header>
 				<main style={{ display: 'flex', gap: '30px', padding: '30px 20px', flexWrap: 'wrap' }}>
-					{moviesData.map((m) => (
-						<MovieCard key={m.id} data={m} type='favorite' />
+					{moviesData.map((movie) => (
+						<MovieCard key={movie.id} data={movie} type='favorite' />
 					))}
 				</main>
 			</Box>

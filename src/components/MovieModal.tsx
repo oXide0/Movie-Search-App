@@ -8,20 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useGetMovieDetailsByIdQuery } from '../services/moviesApi';
 import { useTranslation } from 'react-i18next';
 import ErrorText from './ErrorText';
-
-const style = {
-	position: 'absolute',
-	top: '50%',
-	left: '50%',
-	transform: 'translate(-50%, -50%)',
-	width: 900,
-	bgcolor: 'background.paper',
-	boxShadow: 24,
-	p: 2,
-	display: 'flex',
-	borderRadius: '10px',
-	gap: '20px',
-};
+import { modalStyles } from '../utils/styles';
 
 interface BasicModalProps {
 	active: boolean;
@@ -47,8 +34,8 @@ function BasicModal({ active, setActive, id }: BasicModalProps) {
 			}}
 		>
 			<Fade in={active}>
-				<Box sx={style}>
-					{error && <ErrorText />}
+				<Box sx={modalStyles}>
+					{error && <ErrorText>Movie not found</ErrorText>}
 					{!isSuccess ? (
 						<CircularProgress />
 					) : (
